@@ -1,0 +1,28 @@
+@use "../../styles/vars" as *
+
+.header
+  background-color: $color-dos
+  height: 200px 
+  @media (max-width: 991px)
+    height: 300px 
+    
+.header
+    .logo
+        font-size: 4em
+        color: $color-tres
+        margin-right: 10%
+        border-radius: 3em
+        cursor: pointer
+        text-transform: uppercase
+        @media (max-width: 991px)
+            font-size: 3em
+    :hover
+        color: $color-uno !important
+        
+#basic-navbar-nav
+    .me-auto 
+        .link
+            font-size: 2em
+            text-transform: uppercase
+            color: $color-tres
+            margin-left: 10px
