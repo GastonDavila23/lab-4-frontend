@@ -1,0 +1,38 @@
+@use "../../styles/vars" as *
+
+.slider-contenedor
+  margin-top: 150px 
+  height: 700px
+  .slider
+    background-color: #fff
+    height: 500px
+    max-width: 100%
+    margin: 40px auto
+    margin-bottom: 0
+    border-radius: 10px
+    overflow: hidden
+    z-index: 1 
+    .carousel-item
+      transition: transform 1s ease-in-out, opacity 1s ease-in-out
+    .carousel-caption
+      padding: 15px
+      border-radius: 10px
+      max-width: 80%
+      margin: 0 auto
+      background-color: #333333b6
+
+.slider-image-contenedor   
+    background-color: green 
+    height: 500px
+    width: 500px
+    margin: 0 auto
+
+.slider-img
+  max-height: 200px
+  max-width: 200px
+  object-fit: cover
+  width: 100%
+
+.custom-arrow
+  font-size: 2rem
+  color: #333

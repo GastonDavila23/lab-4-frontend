@@ -1,0 +1,142 @@
+@use "../../styles/vars" as *
+
+.custom-modal-overlay
+    position: fixed
+    top: 0
+    left: 0
+    width: 100%
+    height: 100% 
+    background-color: $bg-transparent  
+    display: flex
+    justify-content: center
+    align-items: center
+    z-index: 1000
+    .custom-modal
+        background-color: #fff
+        padding: 20px 25px
+        border-radius: 8px
+        width: 70%
+        height: 95%  
+        overflow-y: auto  
+        box-shadow: $shadow
+        position: relative 
+        .modal-body
+            height: 100%
+            display: flex
+            .modal-imagen
+                width: 60%
+                height: 100%
+                border-right: 2px solid $color-dos
+                display: flex
+                flex-direction: column
+                justify-content: space-between
+                .contenedor-imagen
+                    height: 400px
+                    width: 400px
+                    margin: 10px auto
+                    img
+                        width: 100%
+                        height: auto
+                .modal-descripcion
+                    height: auto
+                    padding: 10px
+            .modal-info
+                width: 40%
+                height: 100%
+                padding: 10px 20px
+                .modal-vendidos
+                    padding-top: 10px
+                    color: rgb(101 101 101)
+                .modal-titulo
+                    color: #333
+                    font-size: 1.5em                   
+                .modal-precio
+                    padding: 30px 0
+                    font-size: 2.5em
+                    font-weight: 300                    
+                .modal-marca, 
+                .modal-modelo
+                    margin: 0
+                    font-weight: 500
+                .modal-envio
+                    margin-top: 40px
+                    .envio
+                        font-weight: 500      
+        .modal-footer
+            padding-top: 70px
+            border: none
+            display: flex
+            justify-content: center
+            gap: 1em
+            .cerrar-modal,
+            .agregar-carrito
+                width: 200px
+                background-color: transparent
+                font-weight: 700               
+                padding: 10px 15px
+                border-radius: 8px
+            .cerrar-modal
+                border: solid #fc8686 3px
+                color: #fc8686
+            .cerrar-modal:hover
+                border: solid #ac4141 3px
+                color: #ac4141
+            .agregar-carrito
+                border: solid #1ddffd 3px
+                color: #1ddffd
+            .agregar-carrito:hover  
+                border: solid #578c94 3px
+                color: #578c94
+                
+@media (max-width: 1090px)           
+    .custom-modal-overlay
+        .custom-modal
+            padding: 10px 15px
+            width: 70%
+            height: 50% 
+            .modal-body
+                flex-direction: column
+                .modal-imagen
+                    width: 100%
+                    height: 100%
+                    border: none
+                    border-bottom: 1px solid rgb(227 227 227)                       
+                    .contenedor-imagen
+                        height: 150px
+                        width: 150px
+                        margin: 10px auto
+                    .modal-descripcion
+                        padding: 0
+                .modal-info
+                    width: 100%
+                    padding: 0
+                    border: none
+                    .modal-vendidos
+                        padding-top: 0
+                        margin: 0
+                    .modal-titulo
+                        color: #333
+                        font-size: 1em                   
+                    .modal-precio
+                        padding: 0
+                        margin: 10px 0
+                        font-size: 2em
+                        font-weight: 300                    
+                    .modal-marca, 
+                    .modal-modelo
+                        font-weight: 500
+                    .modal-envio
+                        margin-top: 10px 
+                        .envio
+                            font-weight: 500      
+            .modal-footer
+                margin-top: 0
+                padding: 20px
+                border: none
+                display: flex
+                justify-content: center
+                gap: 1em
+                .cerrar-modal,
+                .agregar-carrito
+                    width: 170px              
+                
