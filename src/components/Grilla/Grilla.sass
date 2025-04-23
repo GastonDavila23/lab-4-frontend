@@ -1,0 +1,90 @@
+@use "../../styles/vars" as *
+.grilla
+  margin: 50px auto
+.select-form
+  background-color: white  
+  color: $color-tres
+  padding: 5px  
+  font-size: 16px  
+  border: 1px solid #ccc  
+  border-radius: 5px  
+
+  option
+    background-color: white  
+    color: $color-dos
+  option[value=""]:disabled
+    colore: grey  
+
+.filtro-categoria
+  display: flex
+  justify-content: space-between
+  align-content: center
+  margin: 2rem auto
+
+  div
+    height: 100px
+
+  label
+    margin-right: 0.5rem
+
+  .select-form
+    padding: 0.5rem
+    border: 1px solid #ccc
+    border-radius: 4px
+    width: 200px
+    width: auto
+    background-color: $color-seis
+    font-weight: 700               
+    padding: 0.5rem
+    border-radius: 8px
+    border: 1px solid white
+    color: $color-dos
+  .select-form:hover
+    border: 1px solid $color-dos
+
+table
+  width: 100%
+  border-collapse: collapse
+  margin: 2rem auto
+
+  th, td
+    padding: 1rem
+    text-align: left
+
+  th
+    border: none
+    color: #333
+    font-weight: bold
+
+
+  td
+    color: #555
+
+  tr:hover
+    background-color: $color-tres
+
+.boton-crear,
+.boton-modificar, 
+.boton-eliminar
+    width: 300px
+    background-color: $color-seis
+    font-weight: 700               
+    padding: 0.5rem
+    border-radius: 8px
+    border: 1px solid white
+    color: $color-dos
+.boton-crear:hover,
+.boton-modificar:hover,
+.boton-eliminar:hover
+  color: $color-dos
+  border: solid $color-dos 1px
+
+.contenedor-botones
+  display: flex
+  justify-content: center
+
+.boton-modificar, 
+.boton-eliminar
+    width: 100px
+    margin: 10px
+

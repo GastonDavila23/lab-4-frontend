@@ -29,11 +29,9 @@ const Header = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#inicio" className="link">Inicio</Nav.Link>
-            <Nav.Link href="#nosotros" className="link">Nosotros</Nav.Link>
-            <Nav.Link href="#ubicacion" className="link">Ubicacion</Nav.Link>
-            <Nav.Link href="#instrumentos" className="link">Instrumentos</Nav.Link> 
-            <Nav.Link className='link' onClick={() => navigate('/grilla')}>Instrumentos</Nav.Link>
+            <Nav.Link className='link' onClick={() => navigate('/')}>Inicio</Nav.Link>
+            <Nav.Link className='link' onClick={() => navigate('/instrumentos')}>Instrumentos</Nav.Link> 
+            <Nav.Link className='link' onClick={() => navigate('/grilla')}>Grilla</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

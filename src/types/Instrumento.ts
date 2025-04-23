@@ -1,5 +1,6 @@
+import { Categoria } from "./Categoria";
 export interface Instrumento {
-    id: number;
+    id?: number;
     instrumento: string;
     imagen: string;
     precio: number;
@@ -8,5 +9,6 @@ export interface Instrumento {
     marca: string;
     modelo: string;
     descripcion: string;
+    categoria: Categoria
   }
   

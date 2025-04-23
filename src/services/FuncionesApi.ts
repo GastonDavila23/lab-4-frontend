@@ -5,7 +5,7 @@
 //     return data.instrumentos;
 // };
 
-const API_URL = 'http://localhost:3001/instrumentos';
+const API_URL = 'http://localhost:8080/api/instrumentos/all';
 
 export const getInstrumentos = async () => {
   const response = await fetch(API_URL);
@@ -18,3 +18,4 @@ export const getInstrumentoById = async (id: number) => {
   if (!response.ok) throw new Error("Instrumento no encontrado");
   return await response.json();
 };
+

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
+import './FormularioInstrumento.sass'
 
 interface Instrumento {
   id?: number;
@@ -11,12 +13,12 @@ interface Instrumento {
   costoEnvio: string;
   cantidadVendida: number;
   descripcion: string;
-  categoriaId: number; // Campo para la categoría
+  categoria: Categoria;  // Campo para la categoría
 }
 
 interface Categoria {
   id: number;
-  nombre: string;
+  denominacion: string; // Cambié 'nombre' por 'denominacion' para que coincida con la respuesta de la API
 }
 
 const FormularioInstrumento: React.FC = () => {
@@ -30,7 +32,7 @@ const FormularioInstrumento: React.FC = () => {
     costoEnvio: '',
     cantidadVendida: 0,
     descripcion: '',
-    categoriaId: 0, // Iniciar con valor por defecto
+    categoria: { id: 0, denominacion: '' }, // Iniciar con valor por defecto
   });
   const [categorias, setCategorias] = useState<Categoria[]>([]); // Estado para las categorías
   const [isEditMode, setIsEditMode] = useState(false); // Determinar si estamos en modo edición
@@ -40,15 +42,15 @@ const FormularioInstrumento: React.FC = () => {
   useEffect(() => {
     fetch('http://localhost:8080/api/categorias') // Asegúrate de que esta URL sea correcta
       .then((response) => response.json())
-      .then((data) => setCategorias(data))
+      .then((data) => setCategorias(data))  // Aquí se setean las categorías
       .catch((error) => console.error('Error al obtener categorías:', error));
   }, []);
 
   // Obtener los datos del instrumento si estamos en modo de edición
   useEffect(() => {
     if (id) {
-      setIsEditMode(true); // Modo edición si hay un id
-      fetch(`http://localhost:8080/api/instrumentos/${id}`)
+      setIsEditMode(true);  // Modo edición si hay un id
+      fetch(`http://localhost:8080/api/instrumentos/buscarXId/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setFormData(data); // Setear los datos del instrumento en el formulario
@@ -59,121 +61,181 @@ const FormularioInstrumento: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+
+    // Si el nombre es "categoria.id", actualizamos el id de la categoria dentro de "formData"
+    if (name === "categoria.id") {
+      setFormData({
+        ...formData,
+        categoria: { ...formData.categoria, id: Number(value) },  // Actualizamos solo el id de la categoria
+      });
+    } else {
+      // Si no es categoria.id, actualizamos normalmente
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
+  //Actualizar Instrumento
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Convertir categoriaId a un objeto con id
+    const updatedData = {
+      ...formData,
+      categoria: { id: Number(formData.categoria.id) },  // Asegúrate de convertir categoriaId a un objeto
+    };
+
+    console.log(updatedData); // Verifica la estructura antes de enviarlo al backend
+
     if (formData.id) {
-      // Si tiene id, actualizamos el instrumento
-      fetch(`http://localhost:8080/api/instrumentos/${formData.id}`, {
+      // Enviar el PUT para actualizar el instrumento
+      fetch(`http://localhost:8080/api/instrumentos/actualizar/${formData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedData),  // Envía el cuerpo con la estructura correcta
       })
-        .then((response) => response.json())
         .then(() => {
-          navigate('/grilla'); // Redirigir a la página de grilla después de actualizar
+          navigate('/grilla');
         })
         .catch((error) => console.error('Error al actualizar el instrumento:', error));
     } else {
-      // Si no tiene id, es un nuevo instrumento, crear
-      fetch('http://localhost:8080/api/instrumentos', {
+      // Enviar el POST para crear el instrumento
+      fetch('http://localhost:8080/api/instrumentos/crear', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(updatedData),  // Envía el cuerpo para crear un nuevo instrumento
       })
-        .then((response) => response.json())
         .then(() => {
-          navigate('/grilla'); // Redirigir a la página de grilla después de crear
+          navigate('/grilla');
         })
         .catch((error) => console.error('Error al crear el instrumento:', error));
     }
   };
 
+
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <button className="close-btn" onClick={() => navigate('/grilla')}>X</button>
-        <h2>{isEditMode ? 'Modificar Instrumento' : 'Crear Instrumento'}</h2>
-        <form onSubmit={handleSubmit}>
+    <Container className='contenedor-formulario'>
+      <form className='formulario-instrumento' onSubmit={handleSubmit}>
+
+        {/* Select para la categoría */}
+        <div>
+          <label htmlFor="categoria">Categoría</label>
+          <select
+            id="categoria"
+            name="categoria.id"
+            value={formData.categoria.id}
+            onChange={handleChange}
+          >
+            <option value="">Selecciona una categoría</option>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.id}>
+                {categoria.denominacion}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='form-group'>
+          <label htmlFor="instrumento">Instrumento</label>
           <input
+            id="instrumento"
             type="text"
             name="instrumento"
             value={formData.instrumento}
             onChange={handleChange}
             placeholder="Instrumento"
           />
+        </div>
+
+        <div>
+          <label htmlFor="marca">Marca</label>
           <input
+            id="marca"
             type="text"
             name="marca"
             value={formData.marca}
             onChange={handleChange}
             placeholder="Marca"
           />
+        </div>
+
+        <div>
+          <label htmlFor="modelo">Modelo</label>
           <input
+            id="modelo"
             type="text"
             name="modelo"
             value={formData.modelo}
             onChange={handleChange}
             placeholder="Modelo"
           />
+        </div>
+
+        <div>
+          <label htmlFor="imagen">Imagen link</label>
           <input
+            id="imagen"
             type="text"
             name="imagen"
             value={formData.imagen}
             onChange={handleChange}
             placeholder="Imagen"
           />
+        </div>
+
+        <div>
+          <label htmlFor="precio">Precio</label>
           <input
+            id="precio"
             type="number"
             name="precio"
             value={formData.precio}
             onChange={handleChange}
             placeholder="Precio"
           />
+        </div>
+
+        <div>
+          <label htmlFor="costoEnvio">Costo de Envío</label>
           <input
+            id="costoEnvio"
             type="text"
             name="costoEnvio"
             value={formData.costoEnvio}
             onChange={handleChange}
-            placeholder="Costo Envío"
+            placeholder="Costo de Envío"
           />
+        </div>
+
+        <div>
+          <label htmlFor="cantidadVendida">Cantidad Vendida</label>
           <input
+            id="cantidadVendida"
             type="number"
             name="cantidadVendida"
             value={formData.cantidadVendida}
             onChange={handleChange}
             placeholder="Cantidad Vendida"
           />
+        </div>
+
+        <div>
+          <label htmlFor="descripcion">Descripción</label>
           <textarea
+            id="descripcion"
             name="descripcion"
             value={formData.descripcion}
             onChange={handleChange}
             placeholder="Descripción"
           />
-          {/* Select para la categoría */}
-          <select
-            name="categoriaId"
-            value={formData.categoriaId}
-            onChange={handleChange}
-          >
-            <option value="">Selecciona una categoría</option>
-            {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.id}>
-                {categoria.nombre}
-              </option>
-            ))}
-          </select>
-          <button type="submit">{isEditMode ? 'Modificar Instrumento' : 'Crear Instrumento'}</button>
-        </form>
-      </div>
-    </div>
+        </div>
+
+        <button className='boton-formulario' type="submit">{isEditMode ? 'Modificar' : 'Crear'} Instrumento</button>
+      </form>
+    </Container>
   );
 };
 

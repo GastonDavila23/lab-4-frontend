@@ -3,18 +3,6 @@ import { useState } from 'react'
 import { Instrumento } from '../../types/Instrumento.ts'
 import Modal from '../Modal/Modal.tsx'
 
-// así se usa son un type de TS
-// const Card = ({
-//     instrumentoImagen = '',
-//     instrumentoTitulo = '',
-//     instrumentoPrecio = '',
-//     instrumentoEnvio = '',
-//     instrumentoVendidos = '',
-//     instrumentoMarca = '',
-//     instrumentoModelo = '',
-//     instrumentoDescripcion = '',
-// }) => {
-
 interface CardProps {
     instrumento: Instrumento;
 }
