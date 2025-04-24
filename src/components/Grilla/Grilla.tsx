@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './Grilla.sass';
-import { Instrumento } from '../../types/Instrumento';
-import { Categoria } from '../../types/Categoria';
-import Titulo from '../Titulo/Titulo';
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Instrumento } from '../../types/Instrumento'
+import { Categoria } from '../../types/Categoria'
+import Titulo from '../Titulo/Titulo'
+import Contenedor from '../Contenedor/Contenedor'
+import './Grilla.sass'
 
 const Grilla: React.FC = () => {
-  const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [selectedCategoria, setSelectedCategoria] = useState<number | null>(null);
-  const navigate = useNavigate();
-
+  const [instrumentos, setInstrumentos] = useState<Instrumento[]>([])
+  const [categorias, setCategorias] = useState<Categoria[]>([])
+  const [selectedCategoria, setSelectedCategoria] = useState<number | null>(null)
+  const navigate = useNavigate()
 
   // Obtener todos los instrumentos del backend
   useEffect(() => {
@@ -66,23 +66,26 @@ const Grilla: React.FC = () => {
 
 
   return (
-    <div className='grilla'>
+    <Contenedor>
       <Titulo texto='Instrumentos disponibles' />
       <div className='filtro-categoria'>
         <div>
-          <label>FLITRAR POR CATEGORIA </label>
-          <select
-            className={"select-form"}
-            value={selectedCategoria || ''}
-            onChange={(e) => setSelectedCategoria(Number(e.target.value))}
-          >
-            <option value="">Selecciona una categoría</option>
-            {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.id}>
-                {categoria.denominacion}
-              </option>
-            ))}
-          </select>
+          <div className='contenedor-categoria'>
+            <label>Filtrar por categoría: </label>
+            <select
+              className={"select-form"}
+              value={selectedCategoria || ''}
+              onChange={(e) => setSelectedCategoria(Number(e.target.value))}
+            >
+              <option value="">Selecciona una categoría</option>
+              {categorias.map((categoria) => (
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.denominacion}
+                </option>
+              ))}
+            </select>
+          </div>
+
         </div>
         <div>
           <button className='boton-crear' onClick={handleCrear}>Crear Nuevo Instrumento</button>
@@ -114,15 +117,17 @@ const Grilla: React.FC = () => {
               <td>{instrumento.cantidadVendida}</td>
               <td>{instrumento.descripcion}</td>
               <td>{instrumento.categoria.denominacion}</td>
-              <td className='contenedor-botones'>
-                <button className='boton-modificar' onClick={() => handleEditar(instrumento.id!)}>Modificar</button>
-                <button className='boton-eliminar' onClick={() => handleEliminar(instrumento.id!)}>Eliminar</button>
+              <td >
+                <div className='acciones'>
+                  <button className='boton-modificar' onClick={() => handleEditar(instrumento.id!)}>Modificar</button>
+                  <button className='boton-eliminar' onClick={() => handleEliminar(instrumento.id!)}>Eliminar</button>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-    </div>
+    </Contenedor>
   );
 };
 

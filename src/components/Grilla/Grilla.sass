@@ -1,46 +1,48 @@
 @use "../../styles/vars" as *
-.grilla
-  margin: 50px auto
-.select-form
-  background-color: white  
-  color: $color-tres
-  padding: 5px  
-  font-size: 16px  
-  border: 1px solid #ccc  
-  border-radius: 5px  
-
-  option
-    background-color: white  
-    color: $color-dos
-  option[value=""]:disabled
-    colore: grey  
+@use "../../styles/mixins" as *
 
 .filtro-categoria
   display: flex
-  justify-content: space-between
+  justify-content: center
   align-content: center
-  margin: 2rem auto
-
+  margin: 8px auto
+  
   div
-    height: 100px
+    height: 50px
+    width: 50%
+    margin: 0 auto
+    display: flex
+    justify-content: center
+    align-items: center
 
-  label
-    margin-right: 0.5rem
+    .contenedor-categoria
+      display: flex
+      justify-content: center
+      align-items: center
+      background-color: $color-tres
+      width: 400px
+      height: 60px
+      border-radius: 8px
+      gap: 8px
 
-  .select-form
-    padding: 0.5rem
-    border: 1px solid #ccc
-    border-radius: 4px
-    width: 200px
-    width: auto
+.select-form
+  background-color: $color-seis
+  color: $color-tres
+  padding: 8px
+  font-size: 16px
+  border: none
+  border-radius: 8px
+  width: auto
+  background-color: $color-seis
+  font-weight: 700
+  color: $color-dos
+
+  &:hover
+    border: none
+
+  option
     background-color: $color-seis
-    font-weight: 700               
-    padding: 0.5rem
-    border-radius: 8px
-    border: 1px solid white
     color: $color-dos
-  .select-form:hover
-    border: 1px solid $color-dos
 
 table
   width: 100%
@@ -52,39 +54,82 @@ table
     text-align: left
 
   th
-    border: none
-    color: #333
-    font-weight: bold
-
+    color: $color-cinco
+    font-weight: 00
+    background-color: $color-dos
+    color: $color-tres
+    border-right: 1px solid $color-seis
 
   td
-    color: #555
+    color: $color-cinco
+    border-bottom: 1px solid $color-dos
 
-  tr:hover
-    background-color: $color-tres
+  // tr:hover
+  //   background-color: $color-tres
+  //   color: $color-tres
 
-.boton-crear,
-.boton-modificar, 
-.boton-eliminar
-    width: 300px
-    background-color: $color-seis
-    font-weight: 700               
-    padding: 0.5rem
-    border-radius: 8px
-    border: 1px solid white
-    color: $color-dos
-.boton-crear:hover,
-.boton-modificar:hover,
-.boton-eliminar:hover
-  color: $color-dos
-  border: solid $color-dos 1px
+  .acciones
+    display: flex
+    flex-direction: column
+    gap: 8px
+    justify-content: center
 
-.contenedor-botones
-  display: flex
-  justify-content: center
+// uso mixins y nesting para no repetir codigo
+.boton
+  &-crear,
+  &-modificar,
+  &-eliminar
+    +boton-base
+    +boton-variant($color-tres, $color-dos)
 
-.boton-modificar, 
-.boton-eliminar
+  &-crear
+    width: 250px
+    height: 60px
+
+  &-modificar
     width: 100px
-    margin: 10px
 
+  &-eliminar
+    width: 100px
+
+//// sass normal
+
+// .boton-crear,
+// .boton-modificar,
+// .boton-eliminar
+//   margin: 0 auto
+//   padding: 0.5rem
+//   font-size: 1rem
+//   border: none
+//   border-radius: 8px
+//   font-weight: 700
+//   cursor: pointer
+//   transition: all 0.3s ease
+//   text-align: center
+//   background-color: $color-dos
+//   color: $color-cuatro
+//   &:hover
+//     background-color: $color-dos
+//     color: color-dos
+  
+// .boton-crear
+//   width: 300px
+
+// .boton-modificar,
+// .boton-eliminar
+//   width: 100px
+
+//// uso mixins
+
+// .boton-crear,
+// .boton-modificar,
+// .boton-eliminar
+//   +boton-base
+//   +boton-variant($color-tres, $color-dos)
+  
+// .boton-crear
+//   width: 300px
+
+// .boton-modificar,
+// .boton-eliminar
+//   width: 100px

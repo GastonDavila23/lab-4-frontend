@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
+import Contenedor from '../Contenedor/Contenedor'
+import Titulo from '../Titulo/Titulo'
 import './FormularioInstrumento.sass'
-
 interface Instrumento {
   id?: number;
   instrumento: string;
@@ -117,125 +117,133 @@ const FormularioInstrumento: React.FC = () => {
 
 
   return (
-    <Container className='contenedor-formulario'>
-      <form className='formulario-instrumento' onSubmit={handleSubmit}>
+    <>
+      <Contenedor className='contenedor-formulario'>
+        <Titulo texto={isEditMode ? 'Modificar Instrumento' : 'Crear Nuevo Instrumento'} />
+        <form className='formulario-instrumento' onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="categoria">Categoría</label>
+            <select
+              id="categoria"
+              name="categoria.id"
+              value={formData.categoria.id}
+              onChange={handleChange}
+            >
+              <option value="">Selecciona una categoría</option>
+              {categorias.map((categoria) => (
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.denominacion}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Select para la categoría */}
-        <div>
-          <label htmlFor="categoria">Categoría</label>
-          <select
-            id="categoria"
-            name="categoria.id"
-            value={formData.categoria.id}
-            onChange={handleChange}
-          >
-            <option value="">Selecciona una categoría</option>
-            {categorias.map((categoria) => (
-              <option key={categoria.id} value={categoria.id}>
-                {categoria.denominacion}
-              </option>
-            ))}
-          </select>
-        </div>
+          <div className='form-group'>
+            <label htmlFor="instrumento">Instrumento</label>
+            <input
+              id="instrumento"
+              type="text"
+              name="instrumento"
+              value={formData.instrumento}
+              onChange={handleChange}
+              placeholder="Instrumento"
+            />
+          </div>
 
-        <div className='form-group'>
-          <label htmlFor="instrumento">Instrumento</label>
-          <input
-            id="instrumento"
-            type="text"
-            name="instrumento"
-            value={formData.instrumento}
-            onChange={handleChange}
-            placeholder="Instrumento"
-          />
-        </div>
+          <div className='form-group-dos'>
+            <div>
+              <label htmlFor="marca">Marca</label>
+              <input
+                id="marca"
+                type="text"
+                name="marca"
+                value={formData.marca}
+                onChange={handleChange}
+                placeholder="Marca"
+              />
+            </div>
 
-        <div>
-          <label htmlFor="marca">Marca</label>
-          <input
-            id="marca"
-            type="text"
-            name="marca"
-            value={formData.marca}
-            onChange={handleChange}
-            placeholder="Marca"
-          />
-        </div>
+            <div>
+              <label htmlFor="modelo">Modelo</label>
+              <input
+                id="modelo"
+                type="text"
+                name="modelo"
+                value={formData.modelo}
+                onChange={handleChange}
+                placeholder="Modelo"
+              />
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="modelo">Modelo</label>
-          <input
-            id="modelo"
-            type="text"
-            name="modelo"
-            value={formData.modelo}
-            onChange={handleChange}
-            placeholder="Modelo"
-          />
-        </div>
 
-        <div>
-          <label htmlFor="imagen">Imagen link</label>
-          <input
-            id="imagen"
-            type="text"
-            name="imagen"
-            value={formData.imagen}
-            onChange={handleChange}
-            placeholder="Imagen"
-          />
-        </div>
+          <div>
+            <label htmlFor="imagen">Imagen link</label>
+            <input
+              id="imagen"
+              type="text"
+              name="imagen"
+              value={formData.imagen}
+              onChange={handleChange}
+              placeholder="Imagen"
+            />
+          </div>
 
-        <div>
-          <label htmlFor="precio">Precio</label>
-          <input
-            id="precio"
-            type="number"
-            name="precio"
-            value={formData.precio}
-            onChange={handleChange}
-            placeholder="Precio"
-          />
-        </div>
+          <div className='form-group-tres'>
+            <div>
+              <label htmlFor="precio">Precio</label>
+              <input
+                id="precio"
+                type="number"
+                name="precio"
+                value={formData.precio}
+                onChange={handleChange}
+                placeholder="Precio"
+              />
+            </div>
 
-        <div>
-          <label htmlFor="costoEnvio">Costo de Envío</label>
-          <input
-            id="costoEnvio"
-            type="text"
-            name="costoEnvio"
-            value={formData.costoEnvio}
-            onChange={handleChange}
-            placeholder="Costo de Envío"
-          />
-        </div>
+            <div>
+              <label htmlFor="costoEnvio">Costo de Envío</label>
+              <input
+                id="costoEnvio"
+                type="text"
+                name="costoEnvio"
+                value={formData.costoEnvio}
+                onChange={handleChange}
+                placeholder="Costo de Envío"
+              />
+            </div>
 
-        <div>
-          <label htmlFor="cantidadVendida">Cantidad Vendida</label>
-          <input
-            id="cantidadVendida"
-            type="number"
-            name="cantidadVendida"
-            value={formData.cantidadVendida}
-            onChange={handleChange}
-            placeholder="Cantidad Vendida"
-          />
-        </div>
+            <div>
+              <label htmlFor="cantidadVendida">Cantidad Vendida</label>
+              <input
+                id="cantidadVendida"
+                type="number"
+                name="cantidadVendida"
+                value={formData.cantidadVendida}
+                onChange={handleChange}
+                placeholder="Cantidad Vendida"
+              />
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="descripcion">Descripción</label>
-          <textarea
-            id="descripcion"
-            name="descripcion"
-            value={formData.descripcion}
-            onChange={handleChange}
-            placeholder="Descripción"
-          />
-        </div>
 
-        <button className='boton-formulario' type="submit">{isEditMode ? 'Modificar' : 'Crear'} Instrumento</button>
-      </form>
-    </Container>
+          <div>
+            <label htmlFor="descripcion">Descripción</label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              value={formData.descripcion}
+              onChange={handleChange}
+              placeholder="Descripción"
+            />
+          </div>
+
+          <button className='boton-formulario' type="submit">{isEditMode ? 'Modificar' : 'Crear'} Instrumento</button>
+        </form>
+      </Contenedor>
+    </>
+
   );
 };
 

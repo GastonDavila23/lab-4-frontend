@@ -1,0 +1,28 @@
+@use "./_vars" as *
+
+// boton base
+=boton-base
+    margin: 0 auto
+    padding: 0.5rem
+    font-size: 1rem
+    border: none
+    border-radius: 8px
+    font-weight: 700
+    cursor: pointer
+    transition: all 0.3s ease
+    text-align: center
+
+// boton color
+=boton-variant($bg-color, $color)
+    background-color: $bg-color
+    color: $color
+    &:hover
+        background-color: $color
+        color: $bg-color
+
+// modificador color
+=boton-variant-modifier($color)
+  background-color: $color
+  border-color: darken($color, 10%)
+  &:hover
+    background-color: darken($color, 15%)

@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import { Instrumento } from '../../types/Instrumento'
 import { getInstrumentos } from '../../services/FuncionesApi'
-import { Container } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import Titulo from '../Titulo/Titulo'
+import Contenedor from '../Contenedor/Contenedor'
 
 const Slider = () => {
   const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
@@ -27,10 +27,7 @@ const Slider = () => {
   const instrumentosParaSlider = instrumentos.slice(0, 3);
 
   return (
-    <Container
-      id='inicio'
-      className='slider-contenedor'
-    >
+    <Contenedor>
       <Titulo texto='Los mejores instrumentos' />
       <Carousel
         className='slider'
@@ -53,7 +50,7 @@ const Slider = () => {
           </Carousel.Item>
         ))}
       </Carousel>
-    </Container>
+    </Contenedor>
   );
 };
 
