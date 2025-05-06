@@ -66,68 +66,71 @@ const Grilla: React.FC = () => {
 
 
   return (
-    <Contenedor>
-      <Titulo texto='Instrumentos disponibles' />
-      <div className='filtro-categoria'>
-        <div>
-          <div className='contenedor-categoria'>
-            <label>Filtrar por categoría: </label>
-            <select
-              className={"select-form"}
-              value={selectedCategoria || ''}
-              onChange={(e) => setSelectedCategoria(Number(e.target.value))}
-            >
-              <option value="">Selecciona una categoría</option>
-              {categorias.map((categoria) => (
-                <option key={categoria.id} value={categoria.id}>
-                  {categoria.denominacion}
-                </option>
-              ))}
-            </select>
-          </div>
+    <>
+      <Titulo texto='Grilla de instrumentos' />
+      <Contenedor>
+        <div className='filtro-categoria'>
+          <div>
+            <div className='contenedor-categoria'>
+              <label>Filtrar por categoría </label>
+              <select
+                className={"select-form"}
+                value={selectedCategoria || ''}
+                onChange={(e) => setSelectedCategoria(Number(e.target.value))}
+              >
+                <option value="">Selecciona una categoría</option>
+                {categorias.map((categoria) => (
+                  <option key={categoria.id} value={categoria.id}>
+                    {categoria.denominacion}
+                  </option>
+                ))}
+              </select>
+            </div>
 
+          </div>
         </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Instrumento</th>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Precio</th>
+              <th>Costo de Envío</th>
+              <th>Cantidad Vendida</th>
+              <th>Descripción</th>
+              <th>Categoría</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {instrumentos.map((instrumento) => (
+              <tr key={instrumento.id}>
+                <td>{instrumento.instrumento}</td>
+                <td>{instrumento.marca}</td>
+                <td>{instrumento.modelo}</td>
+                <td>{instrumento.precio}</td>
+                <td>{instrumento.costoEnvio}</td>
+                <td>{instrumento.cantidadVendida}</td>
+                <td>{instrumento.descripcion}</td>
+                <td>{instrumento.categoria.denominacion}</td>
+                <td >
+                  <div className='acciones'>
+                    <button className='boton-modificar' onClick={() => handleEditar(instrumento.id!)}>Modificar</button>
+                    <button className='boton-eliminar' onClick={() => handleEliminar(instrumento.id!)}>Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
         <div>
           <button className='boton-crear' onClick={handleCrear}>Crear Nuevo Instrumento</button>
         </div>
-      </div>
+      </Contenedor>
+    </>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Instrumento</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Precio</th>
-            <th>Costo de Envío</th>
-            <th>Cantidad Vendida</th>
-            <th>Descripción</th>
-            <th>Categoría</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {instrumentos.map((instrumento) => (
-            <tr key={instrumento.id}>
-              <td>{instrumento.instrumento}</td>
-              <td>{instrumento.marca}</td>
-              <td>{instrumento.modelo}</td>
-              <td>{instrumento.precio}</td>
-              <td>{instrumento.costoEnvio}</td>
-              <td>{instrumento.cantidadVendida}</td>
-              <td>{instrumento.descripcion}</td>
-              <td>{instrumento.categoria.denominacion}</td>
-              <td >
-                <div className='acciones'>
-                  <button className='boton-modificar' onClick={() => handleEditar(instrumento.id!)}>Modificar</button>
-                  <button className='boton-eliminar' onClick={() => handleEliminar(instrumento.id!)}>Eliminar</button>
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Contenedor>
   );
 };
 

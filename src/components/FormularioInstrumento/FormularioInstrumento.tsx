@@ -97,7 +97,7 @@ const FormularioInstrumento: React.FC = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedData),  // Envía el cuerpo para crear un nuevo instrumento
+        body: JSON.stringify(updatedData),  // Envía el cuerpo con la estructura correcta
       })
         .then(() => {
           navigate('/grilla');
@@ -129,7 +129,7 @@ const FormularioInstrumento: React.FC = () => {
             </select>
           </div>
 
-          <div className='form-group'>
+          <div>
             <label htmlFor="instrumento">Instrumento</label>
             <input
               id="instrumento"
@@ -141,32 +141,29 @@ const FormularioInstrumento: React.FC = () => {
             />
           </div>
 
-          <div className='form-group-dos'>
-            <div>
-              <label htmlFor="marca">Marca</label>
-              <input
-                id="marca"
-                type="text"
-                name="marca"
-                value={formData.marca}
-                onChange={handleChange}
-                placeholder="Marca"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="modelo">Modelo</label>
-              <input
-                id="modelo"
-                type="text"
-                name="modelo"
-                value={formData.modelo}
-                onChange={handleChange}
-                placeholder="Modelo"
-              />
-            </div>
+          <div>
+            <label htmlFor="marca">Marca</label>
+            <input
+              id="marca"
+              type="text"
+              name="marca"
+              value={formData.marca}
+              onChange={handleChange}
+              placeholder="Marca"
+            />
           </div>
 
+          <div>
+            <label htmlFor="modelo">Modelo</label>
+            <input
+              id="modelo"
+              type="text"
+              name="modelo"
+              value={formData.modelo}
+              onChange={handleChange}
+              placeholder="Modelo"
+            />
+          </div>
 
           <div>
             <label htmlFor="imagen">Imagen link</label>
@@ -180,44 +177,41 @@ const FormularioInstrumento: React.FC = () => {
             />
           </div>
 
-          <div className='form-group-tres'>
-            <div>
-              <label htmlFor="precio">Precio</label>
-              <input
-                id="precio"
-                type="number"
-                name="precio"
-                value={formData.precio}
-                onChange={handleChange}
-                placeholder="Precio"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="costoEnvio">Costo de Envío</label>
-              <input
-                id="costoEnvio"
-                type="text"
-                name="costoEnvio"
-                value={formData.costoEnvio}
-                onChange={handleChange}
-                placeholder="Costo de Envío"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="cantidadVendida">Cantidad Vendida</label>
-              <input
-                id="cantidadVendida"
-                type="number"
-                name="cantidadVendida"
-                value={formData.cantidadVendida}
-                onChange={handleChange}
-                placeholder="Cantidad Vendida"
-              />
-            </div>
+          <div>
+            <label htmlFor="precio">Precio</label>
+            <input
+              id="precio"
+              type="number"
+              name="precio"
+              value={formData.precio}
+              onChange={handleChange}
+              placeholder="Precio"
+            />
           </div>
 
+          <div>
+            <label htmlFor="costoEnvio">Costo de Envío</label>
+            <input
+              id="costoEnvio"
+              type="text"
+              name="costoEnvio"
+              value={formData.costoEnvio}
+              onChange={handleChange}
+              placeholder="Costo de Envío"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="cantidadVendida">Cantidad Vendida</label>
+            <input
+              id="cantidadVendida"
+              type="number"
+              name="cantidadVendida"
+              value={formData.cantidadVendida}
+              onChange={handleChange}
+              placeholder="Cantidad Vendida"
+            />
+          </div>
 
           <div>
             <label htmlFor="descripcion">Descripción</label>
@@ -230,7 +224,7 @@ const FormularioInstrumento: React.FC = () => {
             />
           </div>
 
-          <button className='boton-formulario' type="submit">{isEditMode ? 'Modificar' : 'Crear'} Instrumento</button>
+          <button className='boton-formulario' type="submit">{isEditMode ? 'Modificar' : 'Crear'}</button>
         </form>
       </Contenedor>
     </>

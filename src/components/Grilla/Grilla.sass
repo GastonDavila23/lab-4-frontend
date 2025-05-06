@@ -19,26 +19,22 @@
       display: flex
       justify-content: center
       align-items: center
-      background-color: $color-tres
-      width: 400px
+      color: $color-cinco
+      font-size: 1.2em
+      width: 420px
       height: 60px
       border-radius: 8px
       gap: 8px
 
 .select-form
   background-color: $color-seis
-  color: $color-tres
+  color: $color-cinco
   padding: 8px
   font-size: 16px
-  border: none
+  border: 2px solid $color-cinco
   border-radius: 8px
   width: auto
-  background-color: $color-seis
   font-weight: 700
-  color: $color-dos
-
-  &:hover
-    border: none
 
   option
     background-color: $color-seis
@@ -55,18 +51,17 @@ table
 
   th
     color: $color-cinco
-    font-weight: 00
-    background-color: $color-dos
-    color: $color-tres
-    border-right: 1px solid $color-seis
+    font-weight: 700
+    color: white
+    background-color: $color-cinco
 
   td
     color: $color-cinco
-    border-bottom: 1px solid $color-dos
 
-  // tr:hover
-  //   background-color: $color-tres
-  //   color: $color-tres
+
+  tr:hover
+    background-color: $color-tres
+    color: $color-tres
 
   .acciones
     display: flex
@@ -80,7 +75,7 @@ table
   &-modificar,
   &-eliminar
     +boton-base
-    +boton-variant($color-tres, $color-dos)
+    +boton-variant-modifier($color-dos)
 
   &-crear
     width: 250px

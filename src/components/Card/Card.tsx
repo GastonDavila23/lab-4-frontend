@@ -2,16 +2,17 @@ import './Card.sass';
 import { useState } from 'react';
 import { CardProps } from '../../types/CardsProps.ts';
 import Modal from '../Modal/Modal.tsx';
-import { useCart } from '../../context/CartContext'; // Importamos el hook del contexto
+import { useCart } from '../../context/CartContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 
 const Card: React.FC<CardProps> = ({ instrumento }) => {
     const [showModal, setShowModal] = useState(false);
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
-    const { carrito, agregarAlCarrito, modificarCantidad, eliminarItem } = useCart(); // Usamos el hook
+    const { carrito, agregarAlCarrito, modificarCantidad, eliminarItem } = useCart();
 
-    // Verificar si el instrumento ya está en el carrito
     const itemEnCarrito = carrito.find((item) => item.id === instrumento.id);
 
     return (
@@ -29,46 +30,48 @@ const Card: React.FC<CardProps> = ({ instrumento }) => {
                 {instrumento.costoEnvio == 'G' ? (
                     <div className='envio-gratis'>
                         <img src="./images/camion.png" alt="logo-envio-gratis" />
-                        <p>Envío gratis a todo el país</p>
+                        <p>Envío gratis</p>
                     </div>
                 ) : (
-                    <p className='card-envio'>Costo de Envio Interior de Argentina: ${instrumento.costoEnvio}</p>
+                    <p className='card-envio'>Costo de Envio: ${instrumento.costoEnvio}</p>
                 )}
                 <p className='card-vendidos'>{instrumento.cantidadVendida} vendidos</p>
 
-                <div className='card-buttons'>
+                <div className='card-buttons-container'>
                     <button className='ver-mas' onClick={handleShow}>Ver detalles</button>
-
-                    {itemEnCarrito ? (
-                        <div className='botones-cantidad'>
+                    
+                    <div className="comprar-wrapper">
+                        {itemEnCarrito ? (
+                            <div className='botones-cantidad'>
+                                <button
+                                    className='boton-disminuir'
+                                    onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad - 1)}
+                                >
+                                    <FontAwesomeIcon icon={faMinus} />
+                                </button>
+                                <span className='cantidad'>{itemEnCarrito.cantidad}</span>
+                                <button
+                                    className='boton-aumentar'
+                                    onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad + 1)}
+                                >
+                                    <FontAwesomeIcon icon={faPlus} />
+                                </button>
+                                <button
+                                    className='boton-eliminar'
+                                    onClick={() => eliminarItem(instrumento.id!)}
+                                >
+                                    <FontAwesomeIcon icon={faTrashCan} />
+                                </button>
+                            </div>
+                        ) : (
                             <button
-                                className='boton-disminuir'
-                                onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad - 1)}
+                                className='agregar-carrito'
+                                onClick={() => agregarAlCarrito(instrumento)}
                             >
-                                -
+                                Comprar
                             </button>
-                            <span className='cantidad'>{itemEnCarrito.cantidad}</span>
-                            <button
-                                className='boton-aumentar'
-                                onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad + 1)}
-                            >
-                                +
-                            </button>
-                            <button
-                                className='boton-eliminar'
-                                onClick={() => eliminarItem(instrumento.id!)}
-                            >
-                                Eliminar
-                            </button>
-                        </div>
-                    ) : (
-                        <button
-                            className='agregar-carrito'
-                            onClick={() => agregarAlCarrito(instrumento)}
-                        >
-                            Agregar al carrito
-                        </button>
-                    )}
+                        )}
+                    </div>
                 </div>
 
                 <Modal

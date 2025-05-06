@@ -4,7 +4,7 @@ import Titulo from '../Titulo/Titulo.tsx'
 import { getInstrumentos } from '../../services/FuncionesApi'
 import { Instrumento } from '../../types/Instrumento'
 import { useState, useEffect } from 'react'
-import { Container } from 'react-bootstrap'
+import Contenedor from '../Contenedor/Contenedor.tsx'
 
 const Instrumentos = () => {
 
@@ -24,12 +24,14 @@ const Instrumentos = () => {
     }, []);
 
     return (
-        <Container id='instrumentos'>
-            <Titulo texto='Instrumentos'  />
-            {instrumentos.map(instrumento => (
-                <Card key={instrumento.id} instrumento={instrumento} />
-            ))}
-        </Container>
+        <>
+            <Titulo texto='Cards de instrumentos' />
+            <Contenedor className='contendedor-instrumentos'>
+                {instrumentos.map(instrumento => (
+                    <Card key={instrumento.id} instrumento={instrumento} />
+                ))}
+            </Contenedor>
+        </>
     )
 }
 

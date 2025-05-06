@@ -1,11 +1,12 @@
 import './Modal.sass';
 import { ModalProps } from '../../types/ModalProps.ts';
-import { useCart } from '../../context/CartContext'; // Importamos el hook del contexto
+import { useCart } from '../../context/CartContext' //hook del contexto
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 const Modal: React.FC<ModalProps> = ({ show, handleClose, instrumento }) => {
     const { carrito, agregarAlCarrito, modificarCantidad, eliminarItem } = useCart(); // Usamos el hook
 
-    // Verificar si el instrumento ya está en el carrito
     const itemEnCarrito = carrito.find((item) => item.id === instrumento.id);
 
     if (!show) return null;
@@ -45,38 +46,40 @@ const Modal: React.FC<ModalProps> = ({ show, handleClose, instrumento }) => {
                                 <p className='card-envio'>$ {instrumento.costoEnvio}</p>
                             )}
                         </div>
-                        <div className="modal-footer">
-                            {itemEnCarrito ? (
-                                <div className='botones-cantidad'>
+                        <div className='modal-footer'>
+                            <div className="comprar-wrapper">
+                                {itemEnCarrito ? (
+                                    <div className='botones-cantidad'>
+                                        <button
+                                            className='boton-disminuir'
+                                            onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad - 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faMinus} />
+                                        </button>
+                                        <span className='cantidad'>{itemEnCarrito.cantidad}</span>
+                                        <button
+                                            className='boton-aumentar'
+                                            onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad + 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faPlus} />
+                                        </button>
+                                        <button
+                                            className='boton-eliminar'
+                                            onClick={() => eliminarItem(instrumento.id!)}
+                                        >
+                                            <FontAwesomeIcon icon={faTrashCan} />
+                                        </button>
+                                    </div>
+                                ) : (
                                     <button
-                                        className='boton-disminuir'
-                                        onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad - 1)}
+                                        className='agregar-carrito'
+                                        onClick={() => agregarAlCarrito(instrumento)}
                                     >
-                                        -
+                                        Comprar
                                     </button>
-                                    <span className='cantidad'>{itemEnCarrito.cantidad}</span>
-                                    <button
-                                        className='boton-aumentar'
-                                        onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad + 1)}
-                                    >
-                                        +
-                                    </button>
-                                    <button
-                                        className='boton-eliminar'
-                                        onClick={() => eliminarItem(instrumento.id!)}
-                                    >
-                                        Eliminar
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    className='agregar-carrito'
-                                    onClick={() => agregarAlCarrito(instrumento)}
-                                >
-                                    Agregar al carrito
-                                </button>
-                            )}
-                            <button className='cerrar-modal' onClick={handleClose}>Cerrar</button>
+                                )}
+                            </div>
+                            <button className='cerrar' onClick={handleClose}>Cerrar</button>
                         </div>
                     </div>
                 </div>

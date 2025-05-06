@@ -1,31 +1,39 @@
 @use '../../styles/vars' as *
+@use "../../styles/mixins" as *
 
 .card-container
-    height: 400px
-    width: 100%
+    height: 480px
+    width: 280px
     display: flex
-    flex-direction: row
+    flex-direction: column
     background-color: #fff
     box-shadow: $shadow
     border-radius: 10px
     margin: 10px auto
     padding: 30px 20px
+
     .card-image
-        height: 100%
+        height: 200px
         width: auto
+        margin: 0 auto
+
     .card-info
-        margin-left: 30px
+        margin: 0 auto
         color: #000
+
         .card-titulo
-            font-size: 2em
+            font-size: 1.1em
             font-weight: 100
+
         .card-precio
-            font-size: 2.2em
+            font-size: .9em
             font-weight: 600
+
         .card-envio
-            font-size: 1.2em
-            font-weight: 600
+            font-size: .9em
+            font-weight: 400
             color: #ff8736
+
         .envio-gratis
             height: 30px
             display: flex
@@ -35,33 +43,67 @@
                 font-weight: 600
                 padding: 1px 4px
         .card-vendidos
-            font-size: 1.4em
+            font-size: .8em
             font-weight: 100
-        .ver-mas
-            border: none
-            background-color: #fff
-            color: $color-dos
-        .ver-mas:hover
-            font-weight: 500
-            color: blue
 
-@media (max-width: 1090px)
-    .card-container
-        height: auto
-        width: 90%
-        flex-direction: column
-        margin: 0 auto
-        .card-image
-            margin: 0 auto
-            background-color: blue
-        .card-info
-            margin: 30px 0
-            word-wrap: break-word
-            overflow: hidden
-            .card-titulo,
-            .card-envio
-                display: -webkit-box
-                -webkit-line-clamp: 2
-                -webkit-box-orient: vertical
-                overflow: hidden
-                text-overflow: ellipsis
+        .card-buttons-container
+            position: relative
+            display: flex
+            flex-direction: column
+            gap: 10px
+            margin-top: 15px
+
+            .ver-mas
+                +boton-base
+                width: 100%
+                height: 40px
+
+            .comprar-wrapper
+                position: relative
+                height: 40px
+
+                .agregar-carrito
+                    +boton-base
+                    position: absolute
+                    top: 0
+                    left: 0
+                    margin: 0
+
+                .botones-cantidad
+                    position: absolute
+                    top: 0
+                    left: 0
+                    right: 0
+                    display: flex
+                    align-items: center
+                    justify-content: space-between
+                    z-index: 1
+                    gap: 8px
+                    padding: 4px
+                    border-radius: 4px
+                    height: 40px
+                    
+
+                    button
+                        flex: 1
+                        max-width: 40px
+                        color: $color-dos
+                        padding: 8px
+                        border: none
+                        background: transparent
+                        cursor: pointer
+                        border-radius: 3px
+                        transition: background 0.2s ease
+
+                        &:hover
+                            background: #cccccc
+
+                    .boton-eliminar
+                        background: transparent
+                        color: $color-cuatro
+
+                    .cantidad
+                        min-width: 30px
+                        text-align: center
+                        font-weight: 500
+
