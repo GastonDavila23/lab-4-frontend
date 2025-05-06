@@ -14,7 +14,7 @@ const Grilla: React.FC = () => {
 
   // Obtener todos los instrumentos del backend
   useEffect(() => {
-    fetch('http://localhost:8080/api/categorias')
+    fetch('http://localhost:8080/api/categoria')
       .then((response) => response.json())
       .then((data) => {
         console.log(data);  // Asegúrate de que las categorías tienen el formato correcto

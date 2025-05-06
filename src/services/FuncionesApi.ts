@@ -5,16 +5,16 @@
 //     return data.instrumentos;
 // };
 
-const API_URL = 'http://localhost:8080/api/instrumentos/all';
+const BACKEND_ENDPOINT = 'http://localhost:8080/api/instrumentos';
 
 export const getInstrumentos = async () => {
-  const response = await fetch(API_URL);
+  const response = await fetch(`${BACKEND_ENDPOINT}/all`);
   if (!response.ok) throw new Error("Error al obtener instrumentos");
   return await response.json();
 };
 
 export const getInstrumentoById = async (id: number) => {
-  const response = await fetch(`${API_URL}/${id}`);
+  const response = await fetch(`${BACKEND_ENDPOINT}/id/${id}`);
   if (!response.ok) throw new Error("Instrumento no encontrado");
   return await response.json();
 };

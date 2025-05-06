@@ -1,8 +1,14 @@
-import './Modal.sass'
-import { ModalProps } from '../../types/ModalProps.ts'
+import './Modal.sass';
+import { ModalProps } from '../../types/ModalProps.ts';
+import { useCart } from '../../context/CartContext'; // Importamos el hook del contexto
 
 const Modal: React.FC<ModalProps> = ({ show, handleClose, instrumento }) => {
-    if (!show) return null
+    const { carrito, agregarAlCarrito, modificarCantidad, eliminarItem } = useCart(); // Usamos el hook
+
+    // Verificar si el instrumento ya está en el carrito
+    const itemEnCarrito = carrito.find((item) => item.id === instrumento.id);
+
+    if (!show) return null;
 
     return (
         <div className="custom-modal-overlay">
@@ -37,11 +43,39 @@ const Modal: React.FC<ModalProps> = ({ show, handleClose, instrumento }) => {
                                 </div>
                             ) : (
                                 <p className='card-envio'>$ {instrumento.costoEnvio}</p>
-                            )
-                            }
+                            )}
                         </div>
                         <div className="modal-footer">
-                            <button className='agregar-carrito'>Agregar al carrito</button>
+                            {itemEnCarrito ? (
+                                <div className='botones-cantidad'>
+                                    <button
+                                        className='boton-disminuir'
+                                        onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad - 1)}
+                                    >
+                                        -
+                                    </button>
+                                    <span className='cantidad'>{itemEnCarrito.cantidad}</span>
+                                    <button
+                                        className='boton-aumentar'
+                                        onClick={() => modificarCantidad(instrumento.id!, itemEnCarrito.cantidad + 1)}
+                                    >
+                                        +
+                                    </button>
+                                    <button
+                                        className='boton-eliminar'
+                                        onClick={() => eliminarItem(instrumento.id!)}
+                                    >
+                                        Eliminar
+                                    </button>
+                                </div>
+                            ) : (
+                                <button
+                                    className='agregar-carrito'
+                                    onClick={() => agregarAlCarrito(instrumento)}
+                                >
+                                    Agregar al carrito
+                                </button>
+                            )}
                             <button className='cerrar-modal' onClick={handleClose}>Cerrar</button>
                         </div>
                     </div>
@@ -51,4 +85,4 @@ const Modal: React.FC<ModalProps> = ({ show, handleClose, instrumento }) => {
     );
 };
 
-export default Modal
+export default Modal;

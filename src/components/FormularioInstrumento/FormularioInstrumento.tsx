@@ -2,27 +2,12 @@ import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import Contenedor from '../Contenedor/Contenedor'
 import Titulo from '../Titulo/Titulo'
+import { Instrumento } from '../../types/Instrumento'
+import { Categoria } from '../../types/Categoria'
 import './FormularioInstrumento.sass'
-interface Instrumento {
-  id?: number;
-  instrumento: string;
-  marca: string;
-  modelo: string;
-  imagen: string;
-  precio: number;
-  costoEnvio: string;
-  cantidadVendida: number;
-  descripcion: string;
-  categoria: Categoria;  // Campo para la categoría
-}
-
-interface Categoria {
-  id: number;
-  denominacion: string; // Cambié 'nombre' por 'denominacion' para que coincida con la respuesta de la API
-}
 
 const FormularioInstrumento: React.FC = () => {
-  const { id } = useParams(); // Obtener el id desde la URL
+  const { id } = useParams();
   const [formData, setFormData] = useState<Instrumento>({
     instrumento: '',
     marca: '',
@@ -32,17 +17,17 @@ const FormularioInstrumento: React.FC = () => {
     costoEnvio: '',
     cantidadVendida: 0,
     descripcion: '',
-    categoria: { id: 0, denominacion: '' }, // Iniciar con valor por defecto
+    categoria: { id: 0, denominacion: '' },
   });
-  const [categorias, setCategorias] = useState<Categoria[]>([]); // Estado para las categorías
-  const [isEditMode, setIsEditMode] = useState(false); // Determinar si estamos en modo edición
-  const navigate = useNavigate(); // Redirigir después de la creación o edición
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const navigate = useNavigate();
 
   // Obtener las categorías del backend
   useEffect(() => {
-    fetch('http://localhost:8080/api/categorias') // Asegúrate de que esta URL sea correcta
+    fetch('http://localhost:8080/api/categoria')
       .then((response) => response.json())
-      .then((data) => setCategorias(data))  // Aquí se setean las categorías
+      .then((data) => setCategorias(data))
       .catch((error) => console.error('Error al obtener categorías:', error));
   }, []);
 
@@ -50,7 +35,7 @@ const FormularioInstrumento: React.FC = () => {
   useEffect(() => {
     if (id) {
       setIsEditMode(true);  // Modo edición si hay un id
-      fetch(`http://localhost:8080/api/instrumentos/buscarXId/${id}`)
+      fetch(`http://localhost:8080/api/instrumentos/id/${id}`)
         .then((response) => response.json())
         .then((data) => {
           setFormData(data); // Setear los datos del instrumento en el formulario
@@ -85,6 +70,12 @@ const FormularioInstrumento: React.FC = () => {
     };
 
     console.log(updatedData); // Verifica la estructura antes de enviarlo al backend
+
+    // Validación de categoría
+    if (formData.categoria.id === 0) {
+      alert('Selecciona una categoría');
+      return;
+    }
 
     if (formData.id) {
       // Enviar el PUT para actualizar el instrumento
