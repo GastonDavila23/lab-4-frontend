@@ -1,5 +1,17 @@
 @use '../../styles/vars' as *
 
-.contendedor-instrumentos
-    display: flex
-    flex-direction: row
+.contendor-instrumentos  
+    display: grid
+    grid-template-columns: repeat(4, 1fr)  // 4 columnas
+    gap: 2rem 
+    padding: 1rem
+    width: 100%
+
+    @media (max-width: 1200px)
+        grid-template-columns: repeat(2, 1fr)
+
+    @media (max-width: 768px)
+        grid-template-columns: repeat(1, 1fr)
+
+    @media (max-width: 480px)
+        grid-template-columns: 1fr

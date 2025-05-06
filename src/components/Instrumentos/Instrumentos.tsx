@@ -26,7 +26,7 @@ const Instrumentos = () => {
     return (
         <>
             <Titulo texto='Cards de instrumentos' />
-            <Contenedor className='contendedor-instrumentos'>
+            <Contenedor className='contendor-instrumentos'>
                 {instrumentos.map(instrumento => (
                     <Card key={instrumento.id} instrumento={instrumento} />
                 ))}

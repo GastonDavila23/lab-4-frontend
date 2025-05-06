@@ -27,19 +27,21 @@ const Card: React.FC<CardProps> = ({ instrumento }) => {
             <div className='card-info'>
                 <h1 className='card-titulo'>{instrumento.instrumento}</h1>
                 <p className='card-precio'>${instrumento.precio}</p>
-                {instrumento.costoEnvio == 'G' ? (
-                    <div className='envio-gratis'>
-                        <img src="./images/camion.png" alt="logo-envio-gratis" />
-                        <p>Envío gratis</p>
-                    </div>
-                ) : (
-                    <p className='card-envio'>Costo de Envio: ${instrumento.costoEnvio}</p>
-                )}
+                <div className='card-precio-envio'>
+                    {instrumento.costoEnvio === 'G' ? (
+                        <div className='envio-gratis'>
+                            <img src="./images/camion.png" alt="logo-envio-gratis" />
+                            <p>Envío gratis</p>
+                        </div>
+                    ) : (
+                        <p className='card-envio'>Costo de Envio: ${instrumento.costoEnvio}</p>
+                    )}
+                </div>
                 <p className='card-vendidos'>{instrumento.cantidadVendida} vendidos</p>
 
                 <div className='card-buttons-container'>
                     <button className='ver-mas' onClick={handleShow}>Ver detalles</button>
-                    
+
                     <div className="comprar-wrapper">
                         {itemEnCarrito ? (
                             <div className='botones-cantidad'>

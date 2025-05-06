@@ -2,7 +2,7 @@
 @use "../../styles/mixins" as *
 
 .card-container
-    height: 480px
+    height: 500px
     width: 280px
     display: flex
     flex-direction: column
@@ -29,19 +29,28 @@
             font-size: .9em
             font-weight: 600
 
-        .card-envio
-            font-size: .9em
-            font-weight: 400
-            color: #ff8736
-
-        .envio-gratis
-            height: 30px
+        .card-precio-envio
+            height: 60px
             display: flex
-            color: #39b54a
-            p
+            justify-content: center
+            align-items: center
+
+            .card-envio
+                height: 30px
+                padding: 8px 0
                 font-size: 1.2em
                 font-weight: 600
-                padding: 1px 4px
+                color: #ff8736
+
+            .envio-gratis
+                height: 30px
+                display: flex
+                color: #39b54a
+                p
+                    font-size: 1.2em
+                    font-weight: 600
+                    padding: 1px 4px
+
         .card-vendidos
             font-size: .8em
             font-weight: 100

@@ -35,15 +35,14 @@ const Modal: React.FC<ModalProps> = ({ show, handleClose, instrumento }) => {
                         <p className='modal-precio'>$ {instrumento.precio}</p>
                         <p className='modal-marca'>Marca: {instrumento.marca}</p>
                         <p className='modal-modelo'>Modelo: {instrumento.modelo}</p>
-                        <div className='modal-envio'>
-                            <p className='envio m-0'>Costo Envío:</p>
-                            {instrumento.costoEnvio == 'G' ? (
+                        <div className='modal-precio-envio'>
+                            {instrumento.costoEnvio === 'G' ? (
                                 <div className='envio-gratis'>
                                     <img src="./images/camion.png" alt="logo-envio-gratis" />
                                     <p>Envío gratis </p>
                                 </div>
                             ) : (
-                                <p className='card-envio'>$ {instrumento.costoEnvio}</p>
+                                <p className='envio-pago'>Costo envio: $ {instrumento.costoEnvio}</p>
                             )}
                         </div>
                         <div className='modal-footer'>
