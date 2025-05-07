@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Instrumento } from '../../types/Instrumento'
-import { Categoria } from '../../types/Categoria'
+import { Instrumento, Categoria } from '../../types/types'
 import Titulo from '../Titulo/Titulo'
 import Contenedor from '../Contenedor/Contenedor'
 import './Grilla.sass'

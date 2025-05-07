@@ -1,8 +1,6 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { Instrumento } from "../types/Instrumento";
-import { CarritoItem } from "../types/CarritoItem";
-import { CartContextType } from "../types/CartContextType";
-import { v4 as uuidv4 } from "uuid";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react"
+import { Instrumento, CarritoItem, CartContextType } from "../types/types"
+import { v4 as uuidv4 } from "uuid"
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 

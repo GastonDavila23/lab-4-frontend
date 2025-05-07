@@ -1,6 +1,6 @@
-import './Modal.sass';
-import { ModalProps } from '../../types/ModalProps.ts';
-import { useCart } from '../../context/CartContext' //hook del contexto
+import './Modal.sass'
+import { ModalProps } from '../../types/types'
+import { useCart } from '../../context/CartContext' 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 

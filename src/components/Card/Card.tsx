@@ -1,10 +1,10 @@
-import './Card.sass';
-import { useState } from 'react';
-import { CardProps } from '../../types/CardsProps.ts';
-import Modal from '../Modal/Modal.tsx';
-import { useCart } from '../../context/CartContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import './Card.sass'
+import { useState } from 'react'
+import { CardProps } from '../../types/types'
+import Modal from '../Modal/Modal.tsx'
+import { useCart } from '../../context/CartContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 
 const Card: React.FC<CardProps> = ({ instrumento }) => {
     const [showModal, setShowModal] = useState(false);
@@ -34,7 +34,7 @@ const Card: React.FC<CardProps> = ({ instrumento }) => {
                             <p>Envío gratis</p>
                         </div>
                     ) : (
-                        <p className='card-envio'>Costo de Envio: ${instrumento.costoEnvio}</p>
+                        <p className='card-envio'>Costo envio: ${instrumento.costoEnvio}</p>
                     )}
                 </div>
                 <p className='card-vendidos'>{instrumento.cantidadVendida} vendidos</p>

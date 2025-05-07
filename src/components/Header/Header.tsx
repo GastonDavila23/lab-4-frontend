@@ -1,11 +1,11 @@
-import { Container, Nav, Navbar } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import './Header.sass';
-import { useCart } from '../../context/CartContext';
-import { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
-import { CarritoAside } from '../Carrito/CarritoAside';
+import { Container, Nav, Navbar } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom'
+import { useCart } from '../../context/CartContext'
+import { useState } from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { CarritoAside } from '../Carrito/CarritoAside'
+import './Header.sass'
 
 const Header = () => {
 
@@ -33,6 +33,7 @@ const Header = () => {
               <Nav.Link className='link' onClick={() => navigate('/')}>Inicio</Nav.Link>
               <Nav.Link className='link' onClick={() => navigate('/instrumentos')}>Instrumentos</Nav.Link>
               <Nav.Link className='link' onClick={() => navigate('/grilla')}>Grilla</Nav.Link>
+              <Nav.Link className='link' onClick={() => navigate('/pedidos')}>Pedidos</Nav.Link>
             </Nav>
             <div className="carrito-icono" onClick={() => setMostrarCarrito(true)} style={{ cursor: 'pointer', position: 'relative' }}>
               <FontAwesomeIcon icon={faCartShopping} />

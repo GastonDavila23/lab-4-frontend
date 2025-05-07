@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { Instrumento, Categoria } from '../../types/types'
 import Contenedor from '../Contenedor/Contenedor'
 import Titulo from '../Titulo/Titulo'
-import { Instrumento } from '../../types/Instrumento'
-import { Categoria } from '../../types/Categoria'
 import './FormularioInstrumento.sass'
 
 const FormularioInstrumento: React.FC = () => {

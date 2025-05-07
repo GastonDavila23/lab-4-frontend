@@ -2,7 +2,7 @@ import './Instrumentos.sass'
 import Card from '../Card/Card.tsx'
 import Titulo from '../Titulo/Titulo.tsx'
 import { getInstrumentos } from '../../services/FuncionesApi'
-import { Instrumento } from '../../types/Instrumento'
+import { Instrumento } from '../../types/types'
 import { useState, useEffect } from 'react'
 import Contenedor from '../Contenedor/Contenedor.tsx'
 
