@@ -4,7 +4,7 @@ import { faMinus, faPlus, faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import './CarritoAside.sass'
 import Titulo from '../Titulo/Titulo'
 import { useState } from 'react'
-import { CarritoAsideProps } from '../../types/types'
+import { CarritoAsideProps, PedidoResponse, PedidoRequest } from '../../types/types'
 
 export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) => {
   const { carrito, limpiarCarrito, modificarCantidad, eliminarItem } = useCart()
@@ -12,22 +12,32 @@ export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) 
 
   const handleGuardarPedido = async () => {
     try {
-      // Mapear items al formato que espera el backend
-      const detalles = carrito.map(item => ({
-        instrumentoId: item.id,
-        cantidad: item.cantidad,
-      }));
+      // Calcular el total del pedido
+      const calcularTotal = () => {
+        return carrito.reduce((total, item) => {
+          return total + (item.precio * item.cantidad);
+        }, 0);
+      };
+
+      const pedido: PedidoRequest = {
+        fecha: new Date().toISOString(),
+        total: calcularTotal(),
+        detalles: carrito.map(item => ({
+          instrumentoId: item.id,
+          cantidad: item.cantidad,
+        })),
+      }
 
       const response = await fetch('http://localhost:8080/api/pedido', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ detalles }),
+        body: JSON.stringify(pedido), // Enviar el objeto 'pedido' completo
       });
 
       const data = await response.json();
-      
+
       if (response.ok) {
         setMensaje(` Pedido nro. ${data.id} guardado con éxito. ✅`);
         limpiarCarrito();
@@ -43,7 +53,6 @@ export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) 
       setMensaje(error instanceof Error ? `❌ ${error.message}` : '❌ Error desconocido');
     }
   };
-
   if (!visible) return null
 
   const total = carrito.reduce((acc, item) => acc + item.precio * item.cantidad, 0)
@@ -52,7 +61,7 @@ export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) 
     <div className="carrito-overlay" onClick={onClose}>
       <aside className="carrito-aside" onClick={e => e.stopPropagation()}>
         <Titulo texto='Carrito' />
-        
+
         {/* Mensaje de feedback */}
         {mensaje && <div className="feedback-mensaje">{mensaje}</div>}
 
@@ -85,7 +94,7 @@ export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) 
             ))}
           </ul>
         )}
-        
+
         <div className='botones-carrito'>
           <p style={{ margin: '8px', textAlign: 'center', fontSize: '1.2em', fontWeight: '600' }}>
             Total: ${total.toFixed(2)}

@@ -35,7 +35,6 @@ const GrillaPedidos = () => {
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
-            timeZone: 'America/Argentina/Buenos_Aires',
         };
         return new Date(fechaISO).toLocaleString('es-AR', opciones);
     };

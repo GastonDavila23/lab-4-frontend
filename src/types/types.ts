@@ -121,3 +121,14 @@ export interface InstrumentoPedidoResponse {
     instrumento: string;
     precio: number;
 }
+
+export interface DetallePedidoRequest {
+instrumentoId: number
+cantidad: number
+}
+
+export interface PedidoRequest {
+fecha: string
+total: number
+detalles: DetallePedidoRequest[]
+}
