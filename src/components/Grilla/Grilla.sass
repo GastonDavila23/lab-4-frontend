@@ -3,28 +3,19 @@
 
 .filtro-categoria
   display: flex
-  justify-content: center
-  align-content: center
+  justify-content: flex-start 
+  align-items: center 
   margin: 8px auto
-  
-  div
-    height: 50px
-    width: 50%
-    margin: 0 auto
-    display: flex
-    justify-content: center
-    align-items: center
+  padding: 0 20px 
 
-    .contenedor-categoria
-      display: flex
-      justify-content: center
-      align-items: center
+  .contenedor-select-categoria
+    display: flex
+    align-items: center
+    gap: 8px
+
+    label
       color: $color-cinco
       font-size: 1.2em
-      width: 420px
-      height: 60px
-      border-radius: 8px
-      gap: 8px
 
 .select-form
   background-color: $color-seis
@@ -50,14 +41,12 @@ table
     text-align: left
 
   th
-    color: $color-cinco
-    font-weight: 700
     color: white
+    font-weight: 700
     background-color: $color-cinco
 
   td
     color: $color-cinco
-
 
   tr:hover
     background-color: $color-tres
@@ -69,13 +58,12 @@ table
     gap: 8px
     justify-content: center
 
-// uso mixins y nesting para no repetir codigo
 .boton
   &-crear,
   &-modificar,
-  &-eliminar
-    +boton-base
-
+  &-eliminar,
+  &-limpiar
+    +boton-base 
 
   &-crear
     width: 250px
@@ -86,6 +74,10 @@ table
 
   &-eliminar
     width: 100px
+
+  &-limpiar
+    width: 120px
+    
 
 //// sass normal
 

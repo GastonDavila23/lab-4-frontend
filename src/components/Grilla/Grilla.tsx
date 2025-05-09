@@ -1,92 +1,86 @@
-import { useState, useEffect } from 'react'
+import './Grilla.sass'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import { Instrumento, Categoria } from '../../types/types'
 import Titulo from '../Titulo/Titulo'
 import Contenedor from '../Contenedor/Contenedor'
-import './Grilla.sass'
+import { fetchCategorias, fetchInstrumentos, fetchInstrumentosPorCategoria, deleteInstrumento } from '../../services/api'
 
 const Grilla: React.FC = () => {
-  const [instrumentos, setInstrumentos] = useState<Instrumento[]>([])
-  const [categorias, setCategorias] = useState<Categoria[]>([])
-  const [selectedCategoria, setSelectedCategoria] = useState<number | null>(null)
-  const navigate = useNavigate()
+  const [instrumentos, setInstrumentos] = useState<Instrumento[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [selectedCategoria, setSelectedCategoria] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  // Obtener todos los instrumentos del backend
+  // Obtener categorías
   useEffect(() => {
-    fetch('http://localhost:8080/api/categoria')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);  // Asegúrate de que las categorías tienen el formato correcto
+    const cargarCategorias = async () => {
+      try {
+        const data = await fetchCategorias();
         setCategorias(data);
-      })
-      .catch((error) => console.error('Error al obtener las categorías:', error));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error desconocido");
+      }
+    };
+    cargarCategorias();
   }, []);
 
-  // Obtener los instrumentos del backend según la categoría seleccionada
+  // Obtener instrumentos
   useEffect(() => {
-    let url = 'http://localhost:8080/api/instrumentos/all';
-    if (selectedCategoria !== null) {
-      url = `http://localhost:8080/api/instrumentos/categoria/${selectedCategoria}`;
-    }
-
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setInstrumentos(data))
-      .catch((error) => console.error('Error al obtener los instrumentos:', error));
+    const cargarInstrumentos = async () => {
+      try {
+        const data = selectedCategoria !== null
+          ? await fetchInstrumentosPorCategoria(selectedCategoria)
+          : await fetchInstrumentos();
+        setInstrumentos(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Error al cargar instrumentos");
+      }
+    };
+    cargarInstrumentos();
   }, [selectedCategoria]);
 
-
-  // Redirigir a la subruta para crear un nuevo instrumento
-  const handleCrear = () => {
-    navigate('/grilla/crear');
+  // Eliminar instrumento
+  const handleEliminar = async (id: number) => {
+    try {
+      await deleteInstrumento(id);
+      setInstrumentos(prev => prev.filter(instrumento => instrumento.id !== id));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Error al eliminar instrumento");
+    }
   };
 
-  // Redirigir a la subruta para modificar un instrumento existente
-  const handleEditar = (id: number) => {
-    navigate(`/grilla/${id}`);  // Redirige al formulario de edición pasando el ID
-  };
-
-  // Eliminar un instrumento
-  const handleEliminar = (id: number) => {
-    fetch(`http://localhost:8080/api/instrumentos/borrar/${id}`, {
-      method: 'DELETE',
-    })
-      // Validacion para Eliminar
-      .then((response) => {
-        if (response.ok) {
-          setInstrumentos(instrumentos.filter((instrumento) => instrumento.id !== id));
-        } else {
-          console.error('Error al eliminar el instrumento');
-        }
-      })
-      .catch((error) => console.error('Error al eliminar el instrumento:', error));
-  };
-
-
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <>
       <Titulo texto='Grilla de instrumentos' />
       <Contenedor>
         <div className='filtro-categoria'>
-          <div>
-            <div className='contenedor-categoria'>
-              <label>Filtrar por categoría </label>
-              <select
-                className={"select-form"}
-                value={selectedCategoria || ''}
-                onChange={(e) => setSelectedCategoria(Number(e.target.value))}
-              >
-                <option value="">Selecciona una categoría</option>
-                {categorias.map((categoria) => (
-                  <option key={categoria.id} value={categoria.id}>
-                    {categoria.denominacion}
-                  </option>
-                ))}
-              </select>
-            </div>
-
+          <div className='contenedor-select-categoria'> {/* Nuevo div contenedor */}
+            <label>Filtrar por categoría </label>
+            <select
+              className="select-form"
+              value={selectedCategoria || ''}
+              onChange={(e) => setSelectedCategoria(e.target.value ? Number(e.target.value) : null)}
+            >
+              <option value="">Todas las categorías</option>
+              {categorias.map((categoria) => (
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.denominacion}
+                </option>
+              ))}
+            </select>
           </div>
+          {selectedCategoria && (
+            <button
+              className='boton-limpiar'
+              onClick={() => setSelectedCategoria(null)}
+            >
+              Limpiar filtro
+            </button>
+          )}
         </div>
 
         <table>
@@ -109,15 +103,25 @@ const Grilla: React.FC = () => {
                 <td>{instrumento.instrumento}</td>
                 <td>{instrumento.marca}</td>
                 <td>{instrumento.modelo}</td>
-                <td>{instrumento.precio}</td>
-                <td>{instrumento.costoEnvio}</td>
+                <td>${instrumento.precio.toFixed(2)}</td>
+                <td>{instrumento.costoEnvio === "G" ? "Gratis" : `$${instrumento.costoEnvio}`}</td>
                 <td>{instrumento.cantidadVendida}</td>
                 <td>{instrumento.descripcion}</td>
-                <td>{instrumento.categoria.denominacion}</td>
-                <td >
+                <td>{instrumento.categoria?.denominacion}</td>
+                <td>
                   <div className='acciones'>
-                    <button className='boton-modificar' onClick={() => handleEditar(instrumento.id!)}>Modificar</button>
-                    <button className='boton-eliminar' onClick={() => handleEliminar(instrumento.id!)}>Eliminar</button>
+                    <button
+                      className='boton-modificar'
+                      onClick={() => navigate(`/grilla/editar/${instrumento.id}`)}
+                    >
+                      Modificar
+                    </button>
+                    <button
+                      className='boton-eliminar'
+                      onClick={() => handleEliminar(instrumento.id!)}
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 </td>
               </tr>
@@ -125,11 +129,15 @@ const Grilla: React.FC = () => {
           </tbody>
         </table>
         <div>
-          <button className='boton-crear' onClick={handleCrear}>Crear Nuevo Instrumento</button>
+          <button
+            className='boton-crear'
+            onClick={() => navigate('/grilla/crear')}
+          >
+            Crear Nuevo Instrumento
+          </button>
         </div>
       </Contenedor>
     </>
-
   );
 };
 

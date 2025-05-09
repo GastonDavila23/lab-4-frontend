@@ -16,7 +16,6 @@ export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) 
       const detalles = carrito.map(item => ({
         instrumentoId: item.id,
         cantidad: item.cantidad,
-        precioUnitario: item.precio
       }));
 
       const response = await fetch('http://localhost:8080/api/pedido', {
@@ -30,7 +29,7 @@ export const CarritoAside: React.FC<CarritoAsideProps> = ({ visible, onClose }) 
       const data = await response.json();
       
       if (response.ok) {
-        setMensaje(`✅ Pedido guardado con éxito`);
+        setMensaje(` Pedido nro. ${data.id} guardado con éxito. ✅`);
         limpiarCarrito();
         setTimeout(() => {
           setMensaje(null);

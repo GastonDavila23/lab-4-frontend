@@ -3,11 +3,16 @@ import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
+import { faCartShopping, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import { CarritoAside } from '../Carrito/CarritoAside'
 import './Header.sass'
 
-const Header = () => {
+interface HeaderProps {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ darkMode, toggleDarkMode }) => {
 
   const { modificarCantidad, eliminarItem } = useCart();
   const navigate = useNavigate();
@@ -35,22 +40,27 @@ const Header = () => {
               <Nav.Link className='link' onClick={() => navigate('/grilla')}>Grilla</Nav.Link>
               <Nav.Link className='link' onClick={() => navigate('/pedidos')}>Pedidos</Nav.Link>
             </Nav>
-            <div className="carrito-icono" onClick={() => setMostrarCarrito(true)} style={{ cursor: 'pointer', position: 'relative' }}>
-              <FontAwesomeIcon icon={faCartShopping} />
-              {cantidadTotal > 0 && (
-                <span style={{
-                  position: 'absolute',
-                  top: '-5px',
-                  right: '-10px',
-                  backgroundColor: 'red',
-                  color: 'white',
-                  borderRadius: '50%',
-                  padding: '2px 6px',
-                  fontSize: '12px'
-                }}>
-                  {cantidadTotal}
-                </span>
-              )}
+            <div className="acciones-header" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div className="modo-icono" onClick={toggleDarkMode} style={{ cursor: 'pointer' }}>
+                <FontAwesomeIcon icon={darkMode ? faSun : faMoon} />
+              </div>
+              <div className="carrito-icono" onClick={() => setMostrarCarrito(true)} style={{ cursor: 'pointer', position: 'relative' }}>
+                <FontAwesomeIcon icon={faCartShopping} />
+                {cantidadTotal > 0 && (
+                  <span style={{
+                    position: 'absolute',
+                    top: '-5px',
+                    right: '-10px',
+                    backgroundColor: 'red',
+                    color: 'white',
+                    borderRadius: '50%',
+                    padding: '2px 6px',
+                    fontSize: '12px'
+                  }}>
+                    {cantidadTotal}
+                  </span>
+                )}
+              </div>
             </div>
           </Navbar.Collapse>
         </Container>

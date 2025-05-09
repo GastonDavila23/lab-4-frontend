@@ -10,11 +10,12 @@ export const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/instrumentos" element={<InstrumentosCard />} />
-        <Route path="/instrumentos/:id" element={<InstrumentosCard />} />
+      <Route path="/instrumentos" element={<InstrumentosCard />}>
+        <Route path=":id" element={<InstrumentosCard />} />
+      </Route>
       <Route path="/grilla" element={<Grilla />} />
-        <Route path="/grilla/crear" element={<FormularioInstrumento />} />
-        <Route path="/grilla/:id" element={<FormularioInstrumento />} />
+      <Route path="/grilla/crear" element={<FormularioInstrumento />} />
+      <Route path="/grilla/editar/:id" element={<FormularioInstrumento />} /> {/* Corregido "editar" */}
       <Route path="/pedidos" element={<GrillaPedidos />} />
     </Routes>
   );

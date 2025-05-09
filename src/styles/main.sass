@@ -2,5 +2,37 @@
 @use "mixins" as *
 @use "global" as *
 
+
 body
-    background-color: $color-tres
+  background: #f9f9f9
+  color: #222
+  transition: background 0.3s, color 0.3s
+
+.dark-mode
+  background: #121212
+  color: #eee
+
+  .header
+
+    background-color: #1e1e1e !important
+    .link
+      color: #fff !important
+
+  .carrito-icono
+    color: #eee
+
+  .modo-icono
+    color: #eee
+
+  .pedido-card
+    background: #1f1f1f
+    border: 1px solid #333
+    color: #ddd
+
+  .pedido-header
+    border-color: #444
+    color: #fff
+
+  .detalle-subitem
+    color: #aaa
+

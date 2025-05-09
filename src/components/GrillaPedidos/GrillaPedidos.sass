@@ -1,26 +1,46 @@
+.lista-pedidos
+  padding: 2rem
+
 .grilla-pedidos
-  display: grid
-  gap: 1rem
-  padding: 1rem
+  display: flex
+  flex-direction: column
+  gap: 1.5rem
 
 .pedido-card
-  border: 1px solid #ddd
-  border-radius: 8px
-  padding: 1rem
+  background: #fff
+  border: 1px solid #ccc
+  border-radius: 10px
+  padding: 1rem 1.5rem
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1)
+  transition: transform 0.2s ease
+  &:hover
+    transform: scale(1.01)
 
 .pedido-header
   display: flex
   justify-content: space-between
+  align-items: center
+  border-bottom: 1px solid #eee
+  padding-bottom: 0.5rem
   margin-bottom: 1rem
   font-weight: bold
-
-.detalles-pedido
-  display: grid
-  gap: 0.5rem
-  padding-left: 1rem
+  color: #333
 
 .detalle-item
-  display: grid
-  grid-template-columns: 2fr 1fr 1fr
-  border-bottom: 1px solid #eee
   padding: 0.5rem 0
+  border-bottom: 1px dashed #ddd
+  &:last-child
+    border-bottom: none
+
+  span
+    display: block
+    font-weight: 500
+    color: #444
+
+.detalle-subitem
+  display: flex
+  justify-content: space-between
+  font-size: 0.9rem
+  color: #666
+  padding-left: 0.5rem
+  margin-top: 0.3rem
